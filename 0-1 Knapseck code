@@ -1,0 +1,144 @@
+///   ***   ---   |         In the name of ALLAH        |||   ---   ***   ///
+
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ull unsigned long long
+#define dl double
+#define lli long long int
+#define ll long long
+
+#define vi vector<int>
+#define vll vector<ll>
+#define sll set<ll>
+#define pb(x) push_back(x)
+#define pii pair<int, int>
+#define sortvec(v) sort(v.begin(),v.end());
+#define binary_s(v,x) binary_search(v.begin(), v.end(), x)
+#define loop(i, a, b) for (long long int i = a; i < b; i++)
+
+#define mt(a, b, c) make_tuple(a, b, c)
+#define ld long double
+#define lin(a) \
+    lli  a;      \
+    cin >> a;
+#define lin2(a, b) \
+    lli a, b;       \
+    cin >> a >> b
+#define lin3(a, b, c) \
+    lli a, b, c;       \
+    cin >> a >> b >> c
+#define lin4(a, b, c, d) \
+    lli  a, b, c, d;       \
+    cin >> a >> b >> c >> d
+
+#define max3(a, b, c) max(max((a), (b)), (c))
+#define max4(a, b, c, d) max(max((a), (b)), max((c), (d)))
+#define min3(a, b, c) min(min((a), (b)), (c))
+#define min4(a, b, c, d) min(min((a), (b)), min((c), (d)))
+
+#define INF 1000000000000
+const int N=2e5+123;
+const int inf = 2e9;
+const ll infll = 2e14;
+#define pll pair<ll, ll>
+#define mll map<ll, ll>
+#define vpll vector<pair<ll, ll>>
+
+#define bigg LLONG_MAX
+
+#define no cout << "NO" << '\n';
+#define yes cout << "YES" << '\n';
+#define printarr(ar, a) for ( int i = 0 ; i<a ; i++) cout<< ar[i]<<" " ;
+#define all(n) (n).begin(), (n).end()
+
+#define qll queue<long long>
+#define pqll priority_queue<long long>
+
+#define ordset orderedSet<int, std::string>
+#define fos ios_base::sync_with_stdio(false); cin.tie(NULL);
+bitset<N> isPrime;
+vi Primes;
+
+void PrimeGen(int n)
+{
+    for(int i=3;i<=n;i+=2)
+    {
+        isPrime[i]=1;
+    }
+    int sq = sqrt(n);
+    for(int i=3;i<=sq;i+=2)
+    {
+        if(isPrime[i])
+        {
+            for(int j = i*i;j<=n;j+=i)
+            {
+                isPrime[j]=0;
+            }
+        }
+    }
+    isPrime[2]=1;
+    Primes.pb(2);
+    for(int i=3; i<=n;i+=2)
+        if(isPrime[i]==1)
+        {
+            Primes.pb(i);
+        }
+}
+
+bool isPowerOfTwo(int n) {
+    if (n <= 0) return false;
+    return (n & (n - 1)) == 0;
+}
+struct item
+{
+    int weight;
+    int price;
+};
+int main()
+{
+    fos
+    int n,bag;
+    cin>>n>>bag;
+    item a[n];
+    loop(i,0,n)
+    {
+        cin>>a[i].weight;
+        cin>>a[i].price;
+    }
+    vector<vector<int>> mat (n+1,vector<int>(bag+1,0));
+    loop(i,1,n+1)
+    {
+        loop(j,1,bag+1)
+        {
+            if(j<a[i-1].weight)
+            {
+                mat[i][j]= mat[i-1][j];
+            }
+            else
+            {
+                mat[i][j]=max(mat[i-1][j],mat[i-1][j-a[i-1].weight]+a[i-1].price);
+            }
+        }
+    }
+    cout<< mat[n][bag]<<'\n';
+    int i=n,j=bag,x=1;
+    cout<< "Selected Items price and Weight:\n";
+    while(mat[i][j]!=0)
+    {
+        if(mat[i][j]!=mat[i-1][j])
+        {
+            cout<<"Item "<<x<<" : Price : "<< a[i-1].price<<" Weight : "<<a[i-1].weight<<'\n';
+            j-=a[i-1].weight;
+            i--;
+            x++;
+        }
+        else
+        {
+            i--;
+            continue;
+        }
+    }
+    return 0;
+}
