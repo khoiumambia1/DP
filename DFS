@@ -1,0 +1,124 @@
+///   ***   ---   |         In the name of ALLAH        |||   ---   ***   ///
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ull unsigned long long
+#define dl double
+#define lli long long int
+#define ll long long
+
+#define vi vector<int>
+#define vll vector<ll>
+#define sll set<ll>
+#define pb(x) push_back(x)
+#define pii pair<int, int>
+#define sortvec(v) sort(v.begin(),v.end());
+#define binary_s(v,x) binary_search(v.begin(), v.end(), x)
+#define loop(i, a, b) for (long long int i = a; i < b; i++)
+
+#define mt(a, b, c) make_tuple(a, b, c)
+#define ld long double
+#define lin(a) \
+    lli  a;      \
+    cin >> a;
+#define lin2(a, b) \
+    lli a, b;       \
+    cin >> a >> b
+#define lin3(a, b, c) \
+    lli a, b, c;       \
+    cin >> a >> b >> c
+#define lin4(a, b, c, d) \
+    lli  a, b, c, d;       \
+    cin >> a >> b >> c >> d
+
+#define max3(a, b, c) max(max((a), (b)), (c))
+#define max4(a, b, c, d) max(max((a), (b)), max((c), (d)))
+#define min3(a, b, c) min(min((a), (b)), (c))
+#define min4(a, b, c, d) min(min((a), (b)), min((c), (d)))
+
+#define INF 1000000000000
+const int N=2e5+123;
+const int inf = 2e9;
+const ll infll = 2e14;
+#define pll pair<ll, ll>
+#define mll map<ll, ll>
+#define vpll vector<pair<ll, ll>>
+
+#define bigg LLONG_MAX
+
+#define no cout << "NO" << '\n';
+#define yes cout << "YES" << '\n';
+#define printarr(ar, a) for ( int i = 0 ; i<a ; i++) cout<< ar[i]<<" " ;
+#define all(n) (n).begin(), (n).end()
+
+#define qll queue<long long>
+#define pqll priority_queue<long long>
+
+#define ordset orderedSet<int, std::string>
+#define fos ios_base::sync_with_stdio(false);
+bitset<N> isPrime;
+vi Primes;
+
+// BFS → changed to DFS
+
+int main()
+{
+    fos
+    cout<< "Enter Number of vertex and edges: ";
+    int ver,edg;
+    cin>>ver>>edg;
+
+    vector<vector<int>>graph(ver+1,vector<int>(ver+1,0));
+
+    cout<<"\nEnter Edges Start And Ends:\n";
+    loop(i,0,edg)
+    {
+        int x,y;
+        cin>>x>>y;
+        graph[x][y]=graph[y][x]=1;
+    }
+
+    loop(i,1,ver+1)
+    {
+        loop(j,1,ver+1)
+            cout<<graph[i][j]<<' ';
+        cout<<"\n";
+    }
+
+    int start;
+    cout<< "Enter starting vertex: ";
+    cin>>start;
+
+    vector<bool> vis(ver+1,false);
+    vector<int> vissiq;
+
+    stack<int> st;
+    st.push(start);
+
+    while(!st.empty())
+    {
+        int u = st.top();
+        st.pop();
+
+        if(vis[u]) continue;
+        vis[u] = true;
+
+        vissiq.pb(u);
+
+        for(int i = ver; i >= 1; i--)
+        {
+            if(!vis[i] && graph[u][i] == 1)
+            {
+                st.push(i);
+            }
+        }
+    }
+
+    cout<< "Visit Sequence: \n";
+    for(int x : vissiq)
+        cout << x << ' ';
+    cout<< "\n";
+
+    return 0;
+}
